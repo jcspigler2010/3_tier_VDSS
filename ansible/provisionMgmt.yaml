@@ -1,0 +1,27 @@
+---
+  - name: Provision modules for Big-IP Mgmt
+    hosts: mgmtbigips
+    connection: local
+
+    tasks:
+
+    - name: Provision Modules at "nominal" level
+      bigip_provision:
+        module: "{{ item.1 }}"
+        level: nominal
+        state:  present
+        provider:
+          "{{ item.0.provider }}"
+      with_subelements:
+        - "{{ mgmtbigips }}"
+        - modules
+
+    - name: Provision modules not covered by bigip_provision
+      bigip_command:
+        commands:
+          - "modify sys provision {{ item.1 }} nominal"
+        provider:
+          "{{ item.0.provider }}"
+      with_subelements:
+        - "{{ mgmtbigips }}"
+        - extra_modules

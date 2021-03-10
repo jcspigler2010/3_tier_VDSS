@@ -1,0 +1,14 @@
+---
+  -
+    hosts: mgmtbigips
+    connection: local
+    tasks:
+
+    - name: switchboot to volume HD1.X and reboot
+      bigip_command:
+        provider: '{{ item.value.provider }}'
+        commands:
+          - 'switchboot -b HD1.2'
+          - 'reboot'
+        with_dict:
+          - "{{ mgmtbigips }}"

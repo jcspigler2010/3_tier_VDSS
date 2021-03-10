@@ -1,0 +1,19 @@
+---
+  - name: NTP and Time Zone Configurations
+    hosts: bigips
+    connection: local
+    tasks:
+    - name: Set NTP server
+      bigip_device_ntp:
+        ntp_servers:
+          - 192.0.2.23
+        provider:
+          "{{ bigips.bigip_mgmt.provider }}"
+      delegate_to: localhost
+
+    - name: Set timezone
+      bigip_device_ntp:
+        timezone: America/Los_Angeles
+        provider:
+          "{{ bigips.bigip_mgmt.provider }}"
+      delegate_to: localhost

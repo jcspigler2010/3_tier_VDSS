@@ -1,0 +1,81 @@
+---
+  - name: big ip information
+    hosts: intbigips
+    connection: local
+
+    tasks:
+      - name: License BIG-IP using a key
+        bigip_device_license:
+            provider: "{{ item.value.provider }}"
+            license_key: "{{ item.value.license_key }}"
+            accept_eula: yes
+        delegate_to: localhost
+        with_dict:
+          - "{{ intbigips }}"
+
+      - name: Add VLAN Inspection Zone as untagged to interface 1.1
+        bigip_vlan:
+            untagged_interface: 1.1
+            name: "inspection"
+            provider: "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ intbigips }}"
+
+      - name: Add VLAN internal as tagged to interface 1.2
+        bigip_vlan:
+            untagged_interface: 1.2
+            name: "internal"
+            provider: "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ intbigips }}"
+
+      - name: Create Inspection Internal Zone Self IP
+        bigip_selfip:
+          address: "{{ item.value.inspect_selfip }}"
+          name: inspectionSelfIP
+          netmask: 255.255.255.128
+          provider: "{{ item.value.provider }}"
+          vlan: inspection
+          state: present
+          allow_service:
+            - all
+        delegate_to: localhost
+        with_dict:
+          - "{{ intbigips }}"
+
+      - name: Create Internal Self IP
+        bigip_selfip:
+          address: "{{ item.value.internal_selfip }}"
+          name: internalSelfIP
+          netmask: 255.255.255.0
+          provider: "{{ item.value.provider }}"
+          vlan: internal
+          state: present
+          allow_service:
+            - all
+        delegate_to: localhost
+        with_dict:
+          - "{{ intbigips }}"
+
+      - name:  disable setup gui
+        bigip_command:
+          commands: "modify sys global-settings gui-setup disabled"
+          provider:
+            "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ intbigips }}"
+#tmsh save sys config
+
+      - name: Resize Volume and save config
+        bigip_command:
+          commands:
+            - tmsh save sys config
+            - modify sys disk directory /appdata new-size 50485760
+          provider:
+            "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ intbigips }}"

@@ -1,0 +1,30 @@
+---
+  - name: configure csa_portal client ssl profile
+    hosts: bigips
+    connection: local
+    tasks:
+      - name: configure client ssl profile
+        bigip_profile_client_ssl:
+          state: present
+          name: csaportal.cloudmegalodon.us_clientssl
+          cert_key_chain:
+            - cert: cloudmegalodonWildCard.crt
+              key: 	cloudmegalodonWildCard.key
+          provider:
+            "{{  bigips.bigip_mgmt.provider }}"
+        delegate_to: localhost
+
+  - name: configure csa Registration client ssl profile
+    hosts: bigips
+    connection: local
+    tasks:
+      - name: configure client ssl profile
+        bigip_profile_client_ssl:
+          state: present
+          name: csareg.cloudmegalodon.us_clientssl
+          cert_key_chain:
+            - cert: cloudmegalodonWildCard.crt
+              key: 	cloudmegalodonWildCard.key
+          provider:
+            "{{  bigips.bigip_mgmt.provider }}"
+        delegate_to: localhost

@@ -1,0 +1,81 @@
+---
+  - name: big ip information
+    hosts: extbigips
+    connection: local
+
+    tasks:
+      - name: License BIG-IP using a key on
+        bigip_device_license:
+            provider: "{{ item.value.provider }}"
+            license_key: "{{ item.value.license_key }}"
+            accept_eula: yes
+        delegate_to: localhost
+        with_dict:
+          - "{{ extbigips }}"
+
+      - name: Add VLAN External as untagged to interface 1.1 on
+        bigip_vlan:
+            untagged_interface: 1.1
+            name: "external"
+            provider: "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ extbigips }}"
+
+      - name: Add VLAN Inspection Zone as tagged to interface 1.2 on
+        bigip_vlan:
+            untagged_interface: 1.2
+            name: "inspection"
+            provider: "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ extbigips }}"
+
+      - name: Create External Self IP on
+        bigip_selfip:
+          address: "{{ item.value.external_selfip }}"
+          name: externalSelfIP
+          netmask: 255.255.255.0
+          provider: "{{ item.value.provider }}"
+          vlan: external
+          state: present
+        delegate_to: localhost
+        with_dict:
+          - "{{ extbigips }}"
+
+      - name: Create Inspection Zone Self IP on
+        bigip_selfip:
+          address: "{{ item.value.inspect_selfip }}"
+          name: inspectionSelfIP
+          netmask: 255.255.255.128
+          provider: "{{ item.value.provider }}"
+          vlan: inspection
+          state: present
+          allow_service:
+            - all
+        delegate_to: localhost
+        with_dict:
+          - "{{ extbigips }}"
+
+      - name:  disable setup gui on
+        bigip_command:
+          commands:
+            - modify sys global-settings gui-setup disabled
+          provider:
+            "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ extbigips }}"
+
+#tmsh save sys config
+
+      - name: Resize Volume and save config on
+        bigip_command:
+          commands:
+            - tmsh save sys config
+            - modify sys disk directory /appdata new-size 50485760
+          provider:
+            "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ extbigips }}"

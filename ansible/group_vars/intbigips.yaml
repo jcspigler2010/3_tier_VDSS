@@ -1,0 +1,67 @@
+---
+  intbigips:
+    bigipint0:
+      name: bigipint0
+      provider:
+        password: password123
+        server: bigip.fqdn.com
+        user: admin
+        validate_certs: no
+        server_port: 443
+      inspect_selfip: 10.0.3.228
+      internal_selfip: 10.0.5.171
+      license_key:
+      test1_vs: 10.0.3.151
+      web_pool:
+        az_a:
+         priority_group: 9
+         node_ips:
+          - 172.0.1.73
+          - 172.0.1.61
+        az_b:
+         priority_group: 8
+         node_ips:
+          - 172.0.1.169
+          - 172.0.1.207
+      routes:
+        to_inspection_ext:
+          name: inspect_ext_subnet
+          dest_net: 10.0.3.0
+          gw_ip: 10.0.3.247
+          mask: 255.255.255.128
+      modules:
+        - asm
+        - ltm
+
+    bigipint1:
+      name: bigipint1
+      provider:
+        password: password123
+        server: bigip.fqdn.com
+        user: admin
+        validate_certs: no
+        server_port: 443
+      inspect_selfip: 10.0.4.147
+      internal_selfip: 10.0.6.156
+      license_key:
+      test1_vs: 10.0.4.217
+      web_pool:
+        az_a:
+         priority_group: 9
+         node_ips:
+          - 172.0.1.74
+          - 172.0.1.114
+        az_b:
+         priority_group: 8
+         node_ips:
+          - 172.0.1.239
+          - 172.0.1.218
+      routes:
+        to_inspection_ext:
+          name: inspect_ext_subnet
+          dest_net: 10.0.4.0
+          gw_ip: 10.0.4.176
+          mask: 255.255.255.128
+      modules:
+        - asm
+        - ltm

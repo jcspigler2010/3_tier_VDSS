@@ -1,0 +1,11 @@
+---
+  - name: big ip information
+    hosts: intbigips
+    connection: local
+
+    tasks:
+      - name: "Print web_pool information"
+        debug:
+          msg: "Item 1: '{{ item.0.value }}' Item 2: '{{ item.1.value }}'"
+        delegate_to: localhost
+        loop: "{{ intbigips|subelements('bigipint0', { 'skip_missing': true })}}"

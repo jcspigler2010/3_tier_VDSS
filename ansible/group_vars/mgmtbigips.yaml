@@ -1,0 +1,55 @@
+---
+  mgmtbigips:
+    bigipmgmt0:
+      name:
+      provider:
+        password: password123
+        server: bigip.fqdn.com
+        user: admin
+        validate_certs: no
+        server_port: 443
+      routes:
+        - to_inspection_int:
+            name: internal_vs_tier
+            dest_net: 0.0.0.0
+            gw_ip: 10.1.1.1
+            mask: 255.255.255.128
+      external_selfip: 10.1.1.17
+      internal_selfip: 10.1.0.114
+      sslo_out_selfip: 10.1.9.19
+      sslo_in_selfip: 10.1.10.43
+      testvs_ipv6: 2600:1f12:f69:e000:5382:737b:4b1b:5ee0
+      license_key:
+      modules:
+        - apm
+        - ltm
+        - ilx
+        - afm
+        - avr
+      extra_modules:
+        - sslo
+        - urldb
+    bigipmgmt1:
+      name:
+      provider:
+        password: password123
+        server: bigip.fqdn.com
+        user: admin
+        validate_certs: no
+        server_port: 443
+      routes:
+        - to_inspection_int:
+            name: internal_vs_tier
+            dest_net: 0.0.0.0
+            gw_ip: 10.1.1.129
+            mask: 255.255.255.128
+      external_selfip: 10.1.1.228
+      internal_selfip: 10.1.0.247
+      sslo_out_selfip: 10.1.9.146
+      sslo_in_selfip: 10.1.10.219
+      testvs_ipv6: 2600:1f12:f69:e001:9db1:75ad:39b4:beb9
+      license_key:
+      modules:
+        - ltm
+        - pem
+      extra_modules:

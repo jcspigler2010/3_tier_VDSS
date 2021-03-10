@@ -1,0 +1,19 @@
+---
+  - name: upgrade TMOS to 15.1
+    hosts: intbigips
+    connection: local
+    tasks:
+    - name: Upload relative image to the BIG-IP
+      bigip_software_image:
+        image: ../../../tmosISOs/BIGIP-15.1.0-0.0.31.iso
+        provider: "{{ bigips.bigip_int.provider }}"
+        force: no
+
+    - name: Ensure an existing image is installed in specified volume
+      bigip_software_install:
+        image: ../../../tmosISOs/BIGIP-15.1.0-0.0.31.iso
+        volume: HD1.2
+        state: installed
+        provider:
+          "{{ bigips.bigip_int.provider }}"
+      delegate_to: localhost

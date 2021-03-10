@@ -1,0 +1,17 @@
+---
+  - name: configure routing
+    hosts: extbigips
+    connection: local
+    tasks:
+      - name: configuring routes for external bigips
+        bigip_static_route:
+          destination: 0.0.0.0
+          netmask: 0.0.0.0
+          gateway_address: 10.1.1.1
+          name: default
+          provider:
+            "{{ item.0.provider }}"
+        delegate_to: localhost
+        with_subelements:
+          - "{{ extbigips }}"
+          - routes

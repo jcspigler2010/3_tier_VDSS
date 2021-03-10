@@ -1,0 +1,14 @@
+---
+  - name: configure dns
+    hosts: bigips
+    connection: local
+    tasks:
+    - name: Set the DNS settings on the BIG-IP
+      bigip_device_dns:
+        name_servers:
+          - 8.8.8.8
+        search:
+          - authn.local
+        provider:
+          '{{ bigips.bigip_mgmt.provider }}'
+      delegate_to: localhost

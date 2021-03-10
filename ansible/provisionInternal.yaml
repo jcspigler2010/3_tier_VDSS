@@ -1,0 +1,18 @@
+---
+  - name: Provision modules for Big-IP
+    hosts: intbigips
+    connection: local
+
+    tasks:
+
+    - name: Provision Modules for Internal BigIPs
+      bigip_provision:
+        module: '{{ item.1 }}'
+        level: nominal
+        state: present
+        provider:
+          "{{ item.0.provider }}"
+      delegate_to: localhost
+      with_subelements:
+        - "{{ intbigips }}"
+        - modules

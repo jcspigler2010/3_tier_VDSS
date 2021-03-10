@@ -1,0 +1,71 @@
+---
+  extbigips:
+    bigipext0:
+      name: bigipext0
+      provider:
+        password: password123
+        server: bigip.fqdn.com
+        user: admin
+        validate_certs: no
+        server_port: 443
+      inspect_selfip: 10.0.3.96
+      external_selfip: 10.0.1.199
+      license_key:
+      test1_vs: 10.0.1.144
+      routes:
+        route:
+          name: to_internal_inspection_zone
+          dest_net: 10.0.3.128
+          gw_ip: 10.0.3.105
+          mask: 255.255.255.128
+        route:
+          name: to_internal_inspection_zone_2
+          dest_net: 10.0.4.128
+          gw_ip: 10.0.3.105
+          mask: 255.255.255.128
+        route:
+          name: default_gw
+          dest_net: 0.0.0.0
+          gw_ip: 10.0.1.1
+          mask: 0.0.0.0
+      modules:
+        - gtm
+        - afm
+        - apm
+        - ltm
+        - ilx
+    bigipext1:
+      name: bigipext1
+      provider:
+        password: password123
+        server: bigip.fqdn.com
+        user: admin
+        validate_certs: no
+        server_port: 443
+      inspect_selfip: 10.0.4.87
+      external_selfip: 10.0.2.203
+      license_key:
+      test1_vs: 10.0.2.192
+      routes:
+        route:
+          name: to_internal_inspection_zone
+          dest_net: 10.0.4.128
+          gw_ip: 10.0.4.96
+          mask: 255.255.255.128
+        route:
+          name: to_internal_inspection_zone_2
+          dest_net: 10.0.3.128
+          gw_ip: 10.0.4.96
+          mask: 255.255.255.128
+        route:
+          name: default_gw
+          dest_net: 0.0.0.0
+          gw_ip: 10.0.2.1
+          mask: 0.0.0.0
+
+      modules:
+        - gtm
+        - afm
+        - apm
+        - ltm
+        - ilx

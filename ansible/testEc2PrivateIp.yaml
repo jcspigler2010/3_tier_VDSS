@@ -1,0 +1,6 @@
+---
+  - name: test listing ec2 private ips
+    hosts: tag_Tenant_sonic
+    tasks:
+    - name: get variables
+      debug: var=hostvars[inventory_hostname]

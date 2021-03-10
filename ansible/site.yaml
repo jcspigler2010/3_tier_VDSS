@@ -1,0 +1,5 @@
+---
+  - import_playbook: f5Setup.yaml
+  - import_playbook: configNTP.yaml
+  - import_playbook: configVS.yaml
+  - import_playbook: provision.yaml

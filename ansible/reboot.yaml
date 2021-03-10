@@ -1,0 +1,12 @@
+---
+  - name: reboot device
+    connection: local
+    hosts: intbigips
+    tasks:
+      - bigip_command:
+          commands: "reboot"
+          provider:
+           - "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ intbigips }}"

@@ -1,0 +1,8 @@
+[extbigips]
+localhost
+
+[intbigips]
+localhost
+
+[mgmtbigips]
+localhost

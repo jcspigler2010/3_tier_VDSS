@@ -1,0 +1,18 @@
+---
+  - name: upload iFile containing IPI lists
+    hosts: bigips
+    connection: local
+    tasks:
+      - name: Upload a file as an iFile
+        bigip_file_copy:
+          source: "{{ item }}"
+          datastore: ifile
+          provider:
+            "{{ bigips.bigip_mgmt.provider }}"
+        delegate_to: localhost
+        with_items:
+          - blacklist.txt
+          - whitelist.txt
+          - registered.txt
+          - csa_registered.txt
+          - nrde_registered.txt

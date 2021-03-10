@@ -1,0 +1,44 @@
+---
+  - name: Add Virtual Servers and Assocated Configurations
+    hosts: extbigips intbigips
+    connection: local
+    tasks:
+
+      - name: add virtual server for intbigips test1_vs 80
+        bigip_virtual_server:
+          state: present
+          partition: Common
+          name: test1.cloudmegalodon.us_http_80
+          destination: "{{ item.value.test1_vs }}"
+          port: 80
+          description: Test 1 VS HTTP Site
+          profiles:
+            - http
+          enabled_vlans:
+            - all
+          snat: automap
+          provider:
+            "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ intbigips }}"
+
+      - name: add virtual server for test1_vs 443
+        bigip_virtual_server:
+          state: present
+          partition: Common
+          name: test1.cloudmegalodon.us_https_443
+          destination: "{{ item.value.test1_vs }}"
+          port: 443
+          description: Test 1 VS HTTPS site
+          profiles:
+            - http
+            - name: clientssl
+              context: client-side
+          enabled_vlans:
+            - all
+          provider:
+            "{{ item.value.provider }}"
+        delegate_to: localhost
+        with_dict:
+          - "{{ extbigips }}"
