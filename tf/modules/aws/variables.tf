@@ -151,7 +151,7 @@ variable "mgmt_vpc_name" { default = "VDSS_MGMT_VPC" }
 ### Palo DMZ Deployment ###
 variable "pan_instance_type" { default = "m4.4xlarge" }
 variable "pan_name" { default = "pan" }
-variable "number_pan_instances" { default = 2 }
+variable "number_pan_instances" { default = 1 }
 
 ### Windows Deployment ####
 variable "number_windows" { default = 0 }

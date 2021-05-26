@@ -30,6 +30,8 @@ module "aws-gov-west-vdss-1" {
   azs                         = ["us-gov-west-1a"]
   number_mgmt_bigip_instances = 0
   stack_name                  = "aws-gov-west-vdss-1"
+  number_pan_instances        = 1
+  pan_instance_type           = "m5.large"
 
 
 
@@ -46,6 +48,8 @@ module "aws-gov-east-vdss-1" {
   public_key                  = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCtkXEnQ0X3+aIfKP6NvyqPD/4DOrhY2ybuMXHAFnuXrP8qREmJ0Xkhz4ElMqFRnK/BEZSYnAAXwrMjsgDJPQpbmrUfx+6lf7uH72yuCN6GDzz69k97rUDS+IiKTmCkrEWU8IYXuQ9EaO0OSIykhTe9sYgkqcbGd13zT6r7cvQh+0so2UyLWvxkXUzyUihEI6zAW2xnosZV4kT+BtF7DL263H2o1yXIHD8lwUXVwhuOpskuWOnia93oiXoRCLM9UAq+IrfEvTchOoLb6HUCi6qGarM2Knfl5PKJXXZrET7cLKW3FnABzjFsusFQfmastwxs0RviB41ddX6TmIAU921v0qRa8IHyTU9UzCO5Q/sMnYYr9obzKWCZR6RjELsYkOqRtkmLzpZWOb8koATzsF7e7RryKnK6VoaA8Mo7hD9KzUz1ArIx4nphQsFWz75cNgNY3xldj9LgKTzCVTZKLKFcq9OkcF+wxcA65UmSGwq1cyKpP1MpcMpFqSTfKU56ViE= jonathanspigler@jonathans-mbp.lan"
   number_ext_bigip_instances  = 1
   number_int_bigip_instances  = 1
+  number_pan_instances        = 1
+  pan_instance_type           = "m5.large"
   azs                         = ["us-gov-east-1a"]
   number_mgmt_bigip_instances = 0
   mgmt_subnets = {

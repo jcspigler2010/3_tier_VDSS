@@ -36,7 +36,7 @@ data "aws_ami" "latest_pan_ngfw_ami" {
 
   filter {
     name   = "name"
-    values = ["PA-VM-AWS-10*"]
+    values = ["PA-VM-AWS-10.0.6-7064e142*"]
   }
 
   filter {
