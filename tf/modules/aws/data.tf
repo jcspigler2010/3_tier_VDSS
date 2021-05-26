@@ -29,3 +29,18 @@ data "aws_ami" "latest_win19_container" {
     values = ["hvm"]
   }
 }
+
+data "aws_ami" "latest_pan_ngfw_ami" {
+  most_recent = true
+  owners      = ["345084742485", "874634375141", "679593333241"] # Canonical
+
+  filter {
+    name   = "name"
+    values = ["PA-VM-AWS-10*"]
+  }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+}

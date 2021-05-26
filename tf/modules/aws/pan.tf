@@ -13,7 +13,7 @@ resource "aws_eip" "pan_mgmt" {
 
 resource "aws_instance" "pan_dmz" {
   count                       = var.number_pan_instances
-  ami                         = var.pan_ami
+  ami                         = data.aws_ami.latest_pan_ngfw_ami.id
   instance_type               = var.pan_instance_type
   key_name                    = var.key_name
   associate_public_ip_address = true

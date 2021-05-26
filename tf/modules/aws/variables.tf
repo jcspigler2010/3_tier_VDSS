@@ -6,7 +6,10 @@ variable "azs" {
   default     = ["us-gov-west-1a", "us-gov-west-1b"]
 }
 
-
+variable "stack_name" {
+  default = "aws-vdss"
+  type    = string
+}
 variable "region" {
   description = "The region to deploy the VPC in, e.g: us-east-1."
   type        = string
@@ -126,8 +129,6 @@ variable "project" { default = "VDSS" }
 variable "tag" { default = "F5_VDSS" }
 
 ### IMAGES #####
-variable "bigip_ami" { default = "ami-c13e76a0" }
-variable "pan_ami" { default = "ami-917405f0" }
 variable "volume_size" { default = 300 }
 
 ### BIG-IP EXTERNAL TIER ####
@@ -154,7 +155,6 @@ variable "number_pan_instances" { default = 2 }
 
 ### Windows Deployment ####
 variable "number_windows" { default = 0 }
-variable "win_ami" { default = "ami-ff80cb9e" }
 variable "win_instance_type" { default = "t2.large" }
 variable "windows_key_name" { default = "windows" }
 
